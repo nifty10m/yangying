@@ -1,0 +1,35 @@
+plugins {
+    // Apply the groovy plugin to add support for Groovy
+    id 'groovy'
+    id 'maven-publish'
+    id 'signing'
+}
+
+repositories {
+    // Use jcenter for resolving your dependencies.
+    // You can declare any Maven/Ivy/file repository here.
+    mavenCentral()
+}
+
+group = 'io.github.nifty10m.yangying'
+version = '1.0.0-SNAPSHOT'
+
+dependencies {
+    // Use the latest Groovy version for building this library
+    implementation 'org.codehaus.groovy:groovy-all:2.5.4'
+    implementation 'org.spockframework:spock-core:1.2-groovy-2.5'
+
+    // Use the awesome Spock testing and specification framework
+    testImplementation 'org.spockframework:spock-core:1.2-groovy-2.5'
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = 'io.github.nifty10m'
+            artifactId = 'yangying'
+            version = '1.0.0-SNAPSHOT'
+            from components.java
+        }
+    }
+}
