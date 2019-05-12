@@ -32,4 +32,17 @@ publishing {
             from components.java
         }
     }
+    repositories {
+        maven {
+            url "https://oss.sonatype.org/content/repositories/snapshots"
+            credentials {
+                username sonatypeuser
+                password sonatypepassword
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
 }

@@ -11,6 +11,14 @@ class FileSnapshotsIntegrationTest extends Specification {
     int number
   }
 
+  static class StreamSample {
+    String name
+    int number
+    InputStream stream
+    URL url
+    double random
+  }
+
   def "Check comparison of files"() {
     when:
       FileSnapshots.snapshot("ABC", Comparisons.BINARY) == FileSnapshots.current("ABC", Comparisons.BINARY)
@@ -25,6 +33,20 @@ class FileSnapshotsIntegrationTest extends Specification {
       FileSnapshots.snapshot(sample, Comparisons.OBJECT_AS_JSON) == FileSnapshots.current(sample, Comparisons.OBJECT_AS_JSON)
     then:
       noExceptionThrown()
+  }
+
+  def "Check comparison of stream"() {
+    given:
+      def sample = new StreamSample(name: "Donald",
+        number: 121,
+        stream: new ByteArrayInputStream("Hello World".bytes),
+        url: new URL("http://www.google.com"),
+        random: 2.7182818284590)
+    when:
+      def snapshot = FileSnapshots.snapshot(sample, Comparisons.OBJECT_AS_JSON)
+      def current = FileSnapshots.current(sample, Comparisons.OBJECT_AS_JSON)
+    then:
+      snapshot == current
   }
 
   def "Multiple test in one method should be possible"() {
