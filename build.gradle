@@ -1,6 +1,7 @@
 plugins {
     // Apply the groovy plugin to add support for Groovy
     id 'groovy'
+    id 'java-library'
     id 'maven-publish'
     id 'signing'
     id 'com.palantir.git-version' version '0.12.0-rc1'
@@ -37,12 +38,21 @@ task sourcesJar(type: Jar) {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            groupId = 'io.github.nifty10m'
             artifactId = 'yangying'
-            version = gitVersion()
-            description = 'A snapshot comparison library for spock'
+            groupId = 'io.github.nifty10m'
+            artifact sourcesJar
+            artifact javadocJar
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
             pom {
                 name = 'yangying'
+                description = 'A snapshot comparison library for spock'
                 url = "https://www.github.com/nifty10m/yangying"
                 licenses {
                     license {
