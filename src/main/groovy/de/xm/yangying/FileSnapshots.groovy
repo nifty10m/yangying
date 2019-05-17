@@ -25,6 +25,10 @@ class FileSnapshots {
     "true".equalsIgnoreCase(System.getenv("SPOCK_UPDATE"))
   }
 
+  static def assertSnapshot(def sample, Comparison comparison) {
+    assert snapshot(sample, comparison) == current(sample, comparison)
+  }
+
   static def snapshot(def content, Comparison comparison) {
     Path packageDir = packageDir()
     if (!packageDir.toFile().exists()) {
