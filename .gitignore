@@ -5,6 +5,9 @@
 .gradletasknamecache
 gradle.properties
 
+# created on circle ci
+secring.gpg
+
 # compiled output
 /build
 /out
