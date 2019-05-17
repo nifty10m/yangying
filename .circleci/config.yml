@@ -51,7 +51,8 @@ jobs:
             - v1-dependencies-{{ checksum "build.gradle" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
-      - run: ./gradlew publish
+      - run: echo $SIGNING_SECRET_KEY_RING_FILE | base64 --decode > ~/secring.gpg
+      - run: ./gradlew -Psigning.keyId=$SIGNING_KEYID -Psigning.password=$SIGNING_PASSWORD -Psigning.secretKeyRingFile=~/secring.gpg publish
 
 workflows:
   version: 2
