@@ -5,7 +5,7 @@ import groovy.xml.XmlUtil
 
 import java.nio.charset.Charset
 
-class XmlComparision implements Comparison {
+class XmlComparison implements Comparison {
 
   @Override
   String fileExtension() {
