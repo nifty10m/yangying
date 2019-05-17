@@ -3,6 +3,7 @@ plugins {
     id 'groovy'
     id 'maven-publish'
     id 'signing'
+    id 'com.palantir.git-version' version '0.12.0-rc1'
 }
 
 repositories {
@@ -12,7 +13,7 @@ repositories {
 }
 
 group = 'io.github.nifty10m.yangying'
-version = '1.0.0-SNAPSHOT'
+version = gitVersion()
 
 dependencies {
     // Use the latest Groovy version for building this library
@@ -28,13 +29,15 @@ publishing {
         mavenJava(MavenPublication) {
             groupId = 'io.github.nifty10m'
             artifactId = 'yangying'
-            version = '1.0.0-SNAPSHOT'
+            version = gitVersion()
             from components.java
         }
     }
     repositories {
         maven {
-            url "https://oss.sonatype.org/content/repositories/snapshots"
+            def snapshotRepoUrl =  "https://oss.sonatype.org/content/repositories/snapshots"
+            def releaseRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+            url = version.endsWith("SNAPSHOT") ? snapshotRepoUrl : releaseRepoUrl
             credentials {
                 username System.getenv("SONATYPE_USER")
                 password System.getenv("SONATYPE_PASSWORD")
