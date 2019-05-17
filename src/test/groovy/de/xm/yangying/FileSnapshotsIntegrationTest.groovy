@@ -3,7 +3,6 @@ package de.xm.yangying
 import de.xm.yangying.comparison.PngComparisonTest
 import spock.lang.Specification
 
-
 class FileSnapshotsIntegrationTest extends Specification {
 
   static class Sample {
@@ -65,5 +64,13 @@ class FileSnapshotsIntegrationTest extends Specification {
       def png = PngComparisonTest.getResourceAsStream("hikaku-logo.png").bytes
     then:
       FileSnapshots.snapshot(png, Comparisons.PNG) == FileSnapshots.current(png, Comparisons.PNG)
+  }
+
+  def "Compare XML files"() {
+    when:
+      def xmlString = "<note><to>Tove</to><from>Jani</from><heading>Reminder</heading><body>Don't forget me this weekend!</body></note>"
+
+    then:
+      FileSnapshots.snapshot(xmlString, Comparisons.XML) == FileSnapshots.current(xmlString, Comparisons.XML)
   }
 }
