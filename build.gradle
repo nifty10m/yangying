@@ -24,12 +24,45 @@ dependencies {
     testImplementation 'org.spockframework:spock-core:1.2-groovy-2.5'
 }
 
+task javadocJar(type: Jar) {
+    archiveClassifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    archiveClassifier = 'sources'
+    from sourceSets.main.allSource
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
             groupId = 'io.github.nifty10m'
             artifactId = 'yangying'
             version = gitVersion()
+            description = 'A snapshot comparison library for spock'
+            pom {
+                name = 'yangying'
+                url = "https://www.github.com/nifty10m/yangying"
+                licenses {
+                    license {
+                        name = "The Apache License, Version 2.0"
+                        url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                    }
+                }
+                developers {
+                    developer {
+                        id = "terrible_herbst"
+                        name = "Joerg Herbst"
+                        email = "terribleherbst@10m.de"
+                    }
+                }
+                scm {
+                    connection = "scm:git:git://github.com/nifty10m/yangying.git"
+                    developerConnection = "scm:git:ssh://git@github.com:nifty10m/yangying.git"
+                    url = "https://www.github.com/nifty10m/yangying"
+                }
+            }
             from components.java
         }
     }
