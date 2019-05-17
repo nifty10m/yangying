@@ -37,7 +37,7 @@ publishing {
         maven {
             def snapshotRepoUrl =  "https://oss.sonatype.org/content/repositories/snapshots"
             def releaseRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2"
-            url = version.endsWith("SNAPSHOT") ? snapshotRepoUrl : releaseRepoUrl
+            url = version.matches("\\d\\.\\d\\.\\d") ? releaseRepoUrl : snapshotRepoUrl
             credentials {
                 username System.getenv("SONATYPE_USER")
                 password System.getenv("SONATYPE_PASSWORD")
