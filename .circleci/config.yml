@@ -60,7 +60,7 @@ workflows:
       - build:
           filters:
             tags:
-              only: /^\d+\.\d+\.\d+$/
+              only: /.*/
       - deploy:
           requires:
             - build
