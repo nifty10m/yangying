@@ -3,7 +3,7 @@ package de.xm.yangying.comparison
 import de.xm.yangying.Comparison
 import groovy.xml.XmlUtil
 
-import java.nio.charset.Charset
+import java.nio.charset.StandardCharsets
 
 class XmlComparison implements Comparison {
 
@@ -19,13 +19,14 @@ class XmlComparison implements Comparison {
 
   @Override
   byte[] beforeStore(def content) {
-    return prettyPrintXml(content).getBytes(Charset.forName("utf-8"))
+
+    return prettyPrintXml(content).getBytes(StandardCharsets.UTF_8)
 
   }
 
   @Override
   def afterRestore(byte[] fileContent) {
-    new String(fileContent, Charset.forName("utf-8"))
+    new String(fileContent, StandardCharsets.UTF_8)
   }
 
   private static String prettyPrintXml(String xml) {
