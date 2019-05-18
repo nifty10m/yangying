@@ -9,4 +9,5 @@ class Comparisons {
   public static Comparison JSON = new JsonComparison()
   public static Comparison API_RESPONSE = new ApiResponseComparison()
   public static Comparison BINARY = new BinaryComparison("bin")
+  public static Comparison XML = new XmlComparison()
 }
