@@ -34,6 +34,13 @@ class FileSnapshotsIntegrationTest extends Specification {
       noExceptionThrown()
   }
 
+  def "Check comparison of objects with assert"() {
+    when:
+      def sample = new Sample(name: "Mickey Mouse", number: 121)
+    then:
+      FileSnapshots.assertSnapshot(sample, Comparisons.OBJECT_AS_JSON)
+  }
+
   def "Check comparison of stream"() {
     given:
       def sample = new StreamSample(name: "Donald",
