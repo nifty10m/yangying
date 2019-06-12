@@ -1,9 +1,10 @@
 package de.xm.yangying.comparison
 
 import de.xm.yangying.Comparison
+import groovy.util.slurpersupport.GPathResult
 import groovy.xml.XmlUtil
 
-import java.nio.charset.Charset
+import java.nio.charset.StandardCharsets
 
 class XmlComparison implements Comparison {
 
@@ -13,23 +14,29 @@ class XmlComparison implements Comparison {
   }
 
   @Override
-  def beforeComparison(def xmlAsString) {
-    return prettyPrintXml(xmlAsString)
+  def beforeComparison(def original) {
+    String xmlString
+    if (original instanceof String) {
+      xmlString = original
+    } else if (original instanceof GPathResult) {
+      return original
+    } else {
+      throw new RuntimeException("XmlComparison input must provide XML as String, input was " + original.getClass())
+    }
+    def gPathResult = new XmlSlurper().parseText(xmlString)
+    return gPathResult
   }
 
   @Override
   byte[] beforeStore(def content) {
-    return prettyPrintXml(content).getBytes(Charset.forName("utf-8"))
-
+    def xmlNode = new XmlSlurper().parseText(content)
+    return XmlUtil.serialize(xmlNode).getBytes(StandardCharsets.UTF_8)
   }
 
   @Override
   def afterRestore(byte[] fileContent) {
-    new String(fileContent, Charset.forName("utf-8"))
+    def gPathResult = new XmlSlurper().parseText(new String(fileContent, StandardCharsets.UTF_8))
+    return gPathResult
   }
 
-  private static String prettyPrintXml(String xml) {
-    def xmlNode = new XmlSlurper().parseText(xml)
-    return XmlUtil.serialize(xmlNode)
-  }
 }
