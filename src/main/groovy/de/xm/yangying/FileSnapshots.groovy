@@ -26,7 +26,10 @@ class FileSnapshots {
   }
 
   static def assertSnapshot(def sample, Comparison comparison) {
-    assert snapshot(sample, comparison) == current(sample, comparison)
+    def ying = snapshot(sample, comparison)
+    def yang = current(sample, comparison)
+    assert ying == yang
+    return ying == yang
   }
 
   static def snapshot(def content, Comparison comparison) {
