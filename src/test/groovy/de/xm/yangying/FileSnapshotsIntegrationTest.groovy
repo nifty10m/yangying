@@ -26,25 +26,22 @@ class FileSnapshotsIntegrationTest extends Specification {
   }
 
   def "Check comparison of objects"() {
-    given:
-      def sample = new Sample(name: "Donald", number: 121)
     when:
-      FileSnapshots.snapshot(sample, Comparisons.OBJECT_AS_JSON) == FileSnapshots.current(sample, Comparisons.OBJECT_AS_JSON)
+      def sample = new Sample(name: "Daisy", number: 121)
     then:
-      noExceptionThrown()
+      FileSnapshots.snapshot(sample, Comparisons.OBJECT_AS_JSON) == FileSnapshots.current(sample, Comparisons.OBJECT_AS_JSON)
   }
 
   def "Check comparison of stream"() {
-    given:
+    when:
       def sample = new StreamSample(name: "Donald",
         number: 121,
         stream: new ByteArrayInputStream("Hello World".bytes),
         url: new URL("http://www.google.com"),
         random: 2.7182818284590)
-    when:
+    then:
       def snapshot = FileSnapshots.snapshot(sample, Comparisons.OBJECT_AS_JSON)
       def current = FileSnapshots.current(sample, Comparisons.OBJECT_AS_JSON)
-    then:
       snapshot == current
   }
 
