@@ -22,4 +22,16 @@ class XmlComparisonTest extends Specification {
         "  <body>Don't forget me this weekend!</body>\n" +
         "</note>\n" == XmlUtil.serialize(comparison)
   }
+
+  def "should compare and format XML ignoring Attribute Order"() {
+    given:
+      def sampleXml1 = "<sample foo='123' bar='456'>Dies ist ein Test</sample>"
+      def sampleXml2 = "<sample bar='456' foo='123'>Dies ist ein Test</sample>"
+
+      def cut = new XmlComparison()
+
+    expect:
+      cut.beforeComparison(sampleXml1) == cut.beforeComparison(sampleXml2)
+  }
+
 }
