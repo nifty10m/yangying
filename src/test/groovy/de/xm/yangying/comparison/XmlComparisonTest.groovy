@@ -1,5 +1,6 @@
 package de.xm.yangying.comparison
 
+import groovy.xml.XmlUtil
 import spock.lang.Specification
 
 class XmlComparisonTest extends Specification {
@@ -19,6 +20,6 @@ class XmlComparisonTest extends Specification {
         "  <from>Jani</from>\n" +
         "  <heading>Reminder</heading>\n" +
         "  <body>Don't forget me this weekend!</body>\n" +
-        "</note>\n" == comparison
+        "</note>\n" == XmlUtil.serialize(comparison)
   }
 }
