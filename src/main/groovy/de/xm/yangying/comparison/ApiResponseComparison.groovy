@@ -6,11 +6,18 @@ import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 
 import java.nio.charset.Charset
+import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class ApiResponseComparison implements Comparison {
 
   private JsonGenerator JSON_GENERATOR = new JsonGenerator.Options()
     .excludeFieldsByName("id", "createdAt", "lastModified")
+    .addConverter(Instant.class, { it -> it.toEpochMilli() })
+    .addConverter(LocalDate.class, { it.format(DateTimeFormatter.ISO_DATE) })
+    .addConverter(LocalDateTime.class, { it.format(DateTimeFormatter.ISO_DATE) })
     .build()
 
   @Override
