@@ -1,12 +1,15 @@
 package de.xm.yangying
 
-
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.spockframework.runtime.extension.IGlobalExtension
 import org.spockframework.runtime.extension.IMethodInterceptor
 import org.spockframework.runtime.extension.IMethodInvocation
 import org.spockframework.runtime.model.SpecInfo
 
 class FeatureNameExtension implements IGlobalExtension {
+
+  private static final Logger LOG = LoggerFactory.getLogger(FileSnapshots.class)
 
   static ThreadLocal<String> featureNameContext = new ThreadLocal<>()
   static ThreadLocal<String> packageNameContext = new ThreadLocal<>()
@@ -34,12 +37,12 @@ class FeatureNameExtension implements IGlobalExtension {
     spec.addSetupSpecInterceptor(new IMethodInterceptor() {
       @Override
       void intercept(IMethodInvocation invocation) throws Throwable {
-        println "Interception ${invocation.instance.getClass().getSimpleName()}"
+        LOG.debug "Interception ${invocation.instance.getClass().getSimpleName()}"
         packageNameContext.set(invocation.getSpec().getPackage())
         classNameContext.set(invocation.getInstance().getClass().getSimpleName())
         if (FileSnapshots.updating()) {
           FileSnapshots.packageDir().toFile().listFiles().each {
-            println it
+            LOG.debug it
             it.delete()
           }
         }
