@@ -1,5 +1,7 @@
 package de.xm.yangying
 
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 import java.nio.file.Files
 import java.nio.file.Path
@@ -8,6 +10,8 @@ import java.nio.file.Paths
 import static java.util.Locale.ENGLISH
 
 class FileSnapshots {
+
+  private static final Logger LOG = LoggerFactory.getLogger(FileSnapshots.class)
 
   private static String lastWrittenFeatureName
   private static int featuresWritten = 0
@@ -51,11 +55,11 @@ class FileSnapshots {
 
     def resourceFile = resource.toFile()
     if (updating()) {
-      println "Updating ${resourceFile.getPath()}"
+      "Updating ${resourceFile.getPath()}"
       new File(resourceFile.getPath()).createNewFile()
       resourceFile.bytes = comparison.beforeStore(content)
     } else if (!resourceFile.canRead() || resourceFile.bytes.length == 0) {
-      println "Creating ${resourceFile.getPath()}}"
+      LOG.debug "Creating ${resourceFile.getPath()}}"
       new File(resourceFile.getPath()).createNewFile()
       resourceFile.bytes = comparison.beforeStore(content)
     }
