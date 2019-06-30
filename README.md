@@ -4,9 +4,9 @@ YangYing is an extension for [Spock](https://www.spockframework.org) to support 
 
 ## Basic Usage
 
-Basic usage is done using the static `FileSnapshost` methods to create a snapshot from the latest api call and compare it with the the result store in the file systems.
+Basic usage is done using the static `FileSnapshots` methods to create a snapshot from the latest api call and compare it with the the result store in the file systems.
 
-Each method requires a `Comparison` to indicate when to objects are equals. A basic implmentation comparison objects as json is provided using the `Comparisons` class.
+Each method requires a `Comparison` to indicate when to objects are equals. A basic implementation comparison objects as json is provided using the `Comparisons` class.
 
 ``` java
 def result = classUnderTest.call(...)
