@@ -19,7 +19,7 @@ class Comparisons {
   /**
    * A preconfigured Json response excluding no attributes
    *
-   * @Deprecated Use JSON instaed
+   * @Deprecated Use JSON instead
    */
   @Deprecated
   public static Comparison OBJECT_AS_JSON = new JsonComparison()
