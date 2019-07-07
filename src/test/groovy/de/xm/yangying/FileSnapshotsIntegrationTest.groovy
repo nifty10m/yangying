@@ -39,6 +39,13 @@ class FileSnapshotsIntegrationTest extends Specification {
       FileSnapshots.assertSnapshot(sample, Comparisons.OBJECT_AS_JSON)
   }
 
+  def "Check comparison of objects with ignoring field"() {
+    when:
+      def sample = new Sample(name: "Mickey Mouse", number: 42)
+    then:
+      FileSnapshots.assertSnapshot(sample, Comparisons.jsonExcludingProperties("number"))
+  }
+
   def "Check comparison of stream"() {
     when:
       def sample = new StreamSample(name: "Donald",
