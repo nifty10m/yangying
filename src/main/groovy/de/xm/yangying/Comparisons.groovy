@@ -33,7 +33,7 @@ class Comparisons {
   /**
    * A preconfigured Json response excluding lastModified, id and createdAt
    *
-   * @Deprecated Use jsonExcludingProperties to get an instance for an indiviual API
+   * @Deprecated Use jsonExcludingProperties to get an instance for an individual API
    */
   @Deprecated
   public static Comparison API_RESPONSE = new ApiResponseComparison()
