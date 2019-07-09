@@ -42,7 +42,7 @@ class FeatureNameExtension implements IGlobalExtension {
         classNameContext.set(invocation.getInstance().getClass().getSimpleName())
         if (FileSnapshots.updating()) {
           FileSnapshots.packageDir().toFile().listFiles().each {
-            LOG.debug it
+            LOG.debug("Updating {}", it.getName())
             it.delete()
           }
         }
