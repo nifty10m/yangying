@@ -1,0 +1,5 @@
+Hello World
+
+This is a simple Text
+@Developer For Comparison of UTF-8 files 
+
