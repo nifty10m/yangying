@@ -89,6 +89,18 @@ class FileSnapshotsIntegrationTest extends Specification {
       FileSnapshots.snapshot(xmlString, Comparisons.XML) == FileSnapshots.current(xmlString, Comparisons.XML)
   }
 
+  def "Compare TXT files"() {
+    when:
+      def xmlString = """Hello World
+
+This is a simple Text
+@Developer For Comparison of UTF-8 files 
+
+"""
+    then:
+      FileSnapshots.snapshot(xmlString, Comparisons.TXT) == FileSnapshots.current(xmlString, Comparisons.TXT)
+  }
+
   def "Compare XML ignoring attribute order"() {
     when:
       def xmlString = '<note date="2019-08-07" no="42" address="Sample Street"/>'

@@ -49,6 +49,11 @@ class Comparisons {
   public static Comparison XML = new XmlComparison()
 
   /**
+   * Comparing data as txt, ignoring whitespace
+   */
+  public static Comparison TXT = new TextComparison()
+
+  /**
    * Storing data as JSON (using build in serialization) and compare result by excluding the given properties
    */
   static Comparison jsonExcludingProperties(String... excluding) {
