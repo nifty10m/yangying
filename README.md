@@ -21,9 +21,9 @@ current(result, JSON) == snapshot(result, JSON)
 
 ## Comparing using power assertion
 
-You can use the power assert feature reduce the code even further. Cause usually you want to use the same object and the same comparison for creating and retrieving your data you can reduce the code to:
+You can use the power assert feature to reduce the code even further. Cause usually you want to use the same object and the same comparison for creating and retrieving your data. So you can reduce the code to:
 ``` java
-def result = classUnderTest.call(...)
+def sample = classUnderTest.call(...)
 FileSnapshots.assertSnapshot(sample, Comparisons.JSON)
 ``` 
 
