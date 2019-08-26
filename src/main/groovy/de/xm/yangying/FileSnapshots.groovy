@@ -29,11 +29,10 @@ class FileSnapshots {
     "true".equalsIgnoreCase(System.getenv("SPOCK_UPDATE"))
   }
 
-  static def assertSnapshot(def sample, Comparison comparison) {
+  static void assertSnapshot(def sample, Comparison comparison) {
     def ying = snapshot(sample, comparison)
     def yang = current(sample, comparison)
     assert ying == yang
-    return ying == yang
   }
 
   static def snapshot(def content, Comparison comparison) {
