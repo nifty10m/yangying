@@ -1,5 +1,6 @@
 package de.xm.yangying
 
+import de.xm.yangying.comparison.PngComparison
 import de.xm.yangying.comparison.PngComparisonTest
 import spock.lang.Specification
 
@@ -75,6 +76,13 @@ class FileSnapshotsIntegrationTest extends Specification {
       def png = PngComparisonTest.getResourceAsStream("hikaku-logo.png").bytes
     then:
       FileSnapshots.snapshot(png, Comparisons.PNG) == FileSnapshots.current(png, Comparisons.PNG)
+  }
+
+  def "Compare PNG files by raster"() {
+    when:
+      def png = PngComparisonTest.getResourceAsStream("hikaku-logo.png").bytes
+    then:
+      FileSnapshots.snapshot(png, PngComparison.withMode(PngComparison.MODE.PIXEl)) == FileSnapshots.current(png, PngComparison.withMode(PngComparison.MODE.PIXEl))
   }
 
   def "Compare XML files"() {
