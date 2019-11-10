@@ -12,4 +12,14 @@ class PngComparisonTest extends Specification {
     then:
       new PngComparison.Result(with: 1200, height: 450) == comparison.beforeComparison(png)
   }
+
+  def "test beforeComparison by pixel"() {
+    given:
+      def png = PngComparisonTest.getResourceAsStream("hikaku-logo.png").bytes
+    when:
+      def comparison = PngComparison.withMode(PngComparison.MODE.PIXEl)
+      def beforeComapre = comparison.beforeComparison(png)
+    then:
+      beforeComapre.length == 2880000
+  }
 }

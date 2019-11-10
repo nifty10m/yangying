@@ -2,6 +2,10 @@
 
 YangYing is an extension for [Spock](https://www.spockframework.org) to support snapshot testing. Snapshot testing means comparing current result of a test with a previously store result.
 
+## The idea of snapshot testing
+
+The main idea of snapshot testing is to create a _snapshot_ as soon as you know your code is working as expected. After that the snapshot is stored to a file and in every new run your test assures your code is still creating the same data as before. 
+
 ## Basic Usage
 
 Basic usage is done using the static `FileSnapshots` methods to create a snapshot from the latest api call and compare it with the the result store in the file systems.
@@ -42,7 +46,7 @@ YingYang contains some build in comparisons:
 1. Object may be compared using BINARY comparison, in this comparison current and snapshot should be the same, meaning the `byte[]` implementation of snapshot und current must be equals.
 2. Comparison can be done using JSON. Meaning the object is stored as json and map representation (after deserializing) must be equals. Your object will be automaticly transformed into a json string, if it is not a string. Keep in mind default json handling is done via `groovy.json.JsonSlurper` so your object must be supported by this class. If your
 3. JSON_API is almost the same as JSON but does ignore properties like `id or `createdDate` in comparison.
-4. PNG compares the object as PNG files, treating images of same size as equal.
+4. PNG compares the object as PNG files, treating images of same size (or optional with same pixels) as equal.
 5. XML compares the object as XML files, ignoring whitespace and order of attributes. 
 
 You can use these implementations as examples for custom comparison by implementing the Comparison interface.

@@ -1,6 +1,14 @@
 package de.xm.yangying
 
-import de.xm.yangying.comparison.*
+
+import de.xm.yangying.comparison.ApiResponseComparison
+import de.xm.yangying.comparison.BinaryComparison
+import de.xm.yangying.comparison.ConfigureableResponseComparison
+import de.xm.yangying.comparison.JsonComparison
+import de.xm.yangying.comparison.PngComparison
+import de.xm.yangying.comparison.TextComparison
+import de.xm.yangying.comparison.TiffComparison
+import de.xm.yangying.comparison.XmlComparison
 
 /**
  * Central instance or factory methods for all yangying comparions
@@ -10,6 +18,10 @@ class Comparisons {
    * Compare data base on PngComparison checking bytes as an PNG image
    */
   public static Comparison PNG = new PngComparison()
+
+  public static Comparison png(PngComparison.MODE comparisonMode) {
+    return new PngComparison(comparisonMode)
+  }
 
   /**
    * Compare data base on TiffComparison checking bytes as an TIFF image
