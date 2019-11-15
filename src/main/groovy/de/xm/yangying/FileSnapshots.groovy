@@ -1,5 +1,6 @@
 package de.xm.yangying
 
+import de.xm.yangying.environment.ContinousIntegration
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -58,6 +59,9 @@ class FileSnapshots {
       new File(resourceFile.getPath()).createNewFile()
       resourceFile.bytes = comparison.beforeStore(content)
     } else if (!resourceFile.canRead() || resourceFile.bytes.length == 0) {
+      if (ContinousIntegration.isCi()) {
+        throw new FileNotFoundException(resourceFile.getPath())
+      }
       LOG.debug "Creating ${resourceFile.getPath()}}"
       new File(resourceFile.getPath()).createNewFile()
       resourceFile.bytes = comparison.beforeStore(content)
