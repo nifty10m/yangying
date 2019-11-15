@@ -7,11 +7,14 @@ class ContinousIntegrationTest extends Specification {
 
   def "test isCi should check for CI"() {
     setup:
-//      ContinousIntegration.resolveEnvironmentVariable = {
-//        it == "GITLAB_CI"
-//      }
+      def before = ContinousIntegration.resolveEnvironmentVariable
+      ContinousIntegration.resolveEnvironmentVariable = {
+        it == "GITLAB_CI"
+      }
     expect:
       ContinousIntegration.isCi()
+    cleanup:
+      ContinousIntegration.resolveEnvironmentVariable = before
   }
 
   def "test vendor list should be readable"() {
