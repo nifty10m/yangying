@@ -2,7 +2,12 @@ package de.xm.yangying.comparison
 
 import java.nio.charset.StandardCharsets
 
+/**
+ * Comparison to compare text content as plain text
+ */
 class TextComparison extends BinaryComparison {
+
+  boolean ignoreCase
 
   TextComparison() {
     super("txt")
@@ -10,7 +15,9 @@ class TextComparison extends BinaryComparison {
 
   @Override
   def beforeComparison(Object original) {
-    return original.toString().replaceAll("\\s+", "")
+    def withoutWhitespace = original.toString().replaceAll("\\s+", "")
+    def compare = ignoreCase ? withoutWhitespace.toLowerCase(Locale.ENGLISH) : withoutWhitespace
+    return compare
   }
 
   @Override
