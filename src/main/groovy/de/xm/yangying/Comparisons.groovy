@@ -1,17 +1,18 @@
 package de.xm.yangying
 
 
-import de.xm.yangying.comparison.ApiResponseComparison
 import de.xm.yangying.comparison.BinaryComparison
-import de.xm.yangying.comparison.ConfigureableResponseComparison
 import de.xm.yangying.comparison.JsonComparison
 import de.xm.yangying.comparison.PngComparison
 import de.xm.yangying.comparison.TextComparison
 import de.xm.yangying.comparison.TiffComparison
 import de.xm.yangying.comparison.XmlComparison
-
 /**
- * Central instance or factory methods for all yangying comparions
+ * Helper class with preconfigured comparison storages
+ *
+ * Keep in mind, no Comparison here is final, you can customize the Comparison in your application,
+ * use this class only if you really know what you are doing.
+ *
  */
 class Comparisons {
   /**
@@ -19,13 +20,20 @@ class Comparisons {
    */
   public static Comparison PNG = new PngComparison()
 
+  /**
+   * Storing data as JSON (using build in serialization) and compare result by excluding the given properties
+   * @deprecated Use constructor and inject properties new JsonComparison(excludedProperties: excluding)
+   */
+  @Deprecated
   public static Comparison png(PngComparison.MODE comparisonMode) {
     return new PngComparison(comparisonMode)
   }
 
   /**
    * Compare data base on TiffComparison checking bytes as an TIFF image
+   * @Deprecated Use BINARY instead
    */
+  @Deprecated
   public static Comparison TIFF = new TiffComparison()
 
   /**
@@ -40,15 +48,13 @@ class Comparisons {
    * A preconfigured Json response excluding no attributes
    *
    */
-  public static Comparison JSON = new ConfigureableResponseComparison()
+  public static Comparison JSON = new JsonComparison()
 
   /**
    * A preconfigured Json response excluding lastModified, id and createdAt
    *
-   * @Deprecated Use jsonExcludingProperties to get an instance for an individual API
    */
-  @Deprecated
-  public static Comparison API_RESPONSE = new ApiResponseComparison()
+  public static Comparison API_RESPONSE = new JsonComparison(excludedProperties: ["id", "createdAt", "lastModified"])
 
   /**
    * Comparing given data as byte[] on compare data byte by byte (without interpreting)
@@ -67,9 +73,11 @@ class Comparisons {
 
   /**
    * Storing data as JSON (using build in serialization) and compare result by excluding the given properties
+   * @deprecated Use constructor and inject properties new JsonComparison(excludedProperties: excluding)
    */
+  @Deprecated
   static Comparison jsonExcludingProperties(String... excluding) {
-    return new ConfigureableResponseComparison(excluding)
+    return new JsonComparison(excludedProperties: excluding)
   }
 
 }

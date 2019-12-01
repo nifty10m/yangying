@@ -16,14 +16,27 @@ class ConfigureableResponseComparison implements Comparison {
 
   private JsonGenerator JSON_GENERATOR;
 
-  ConfigureableResponseComparison(String... excludedProperties) {
-    JSON_GENERATOR = new JsonGenerator.Options()
-      .excludeFieldsByName(excludedProperties)
-      .addConverter(Instant.class, { it -> it.toEpochMilli() })
-      .addConverter(Year.class, { it.getValue() })
-      .addConverter(LocalDate.class, { it.format(DateTimeFormatter.ISO_DATE) })
-      .addConverter(LocalDateTime.class, { it.format(DateTimeFormatter.ISO_DATE) })
-      .build()
+  String[] excludedProperties = []
+  String[] excludedTypes = []
+  Map<Class, Closure> converter = [
+    (Instant.class)      : { it -> it.toEpochMilli() },
+    (Year.class)         : { it.getValue() },
+    (LocalDate.class)    : { it.format(DateTimeFormatter.ISO_DATE) },
+    (LocalDateTime.class): { it.format(DateTimeFormatter.ISO_DATE) }
+  ]
+
+  /**
+   * Class should not be instanced directly use JsonComparison subclass
+   */
+  protected ConfigureableResponseComparison() {
+  }
+
+  /**
+   * Class should not be instanced directly use JsonComparison subclass
+   */
+  @Deprecated
+  protected ConfigureableResponseComparison(String... excludedProperties) {
+    this.excludedProperties = excludedProperties
   }
 
   @Override
@@ -55,6 +68,13 @@ class ConfigureableResponseComparison implements Comparison {
   }
 
   private String toJson(original) {
+    if (JSON_GENERATOR == null) {
+      def options = new JsonGenerator.Options()
+        .excludeFieldsByName(excludedProperties)
+        .excludeFieldsByName(excludedTypes)
+      converter.each({ options.addConverter(it.key, it.value) })
+      JSON_GENERATOR = options.build()
+    }
     JSON_GENERATOR.toJson(original)
   }
 

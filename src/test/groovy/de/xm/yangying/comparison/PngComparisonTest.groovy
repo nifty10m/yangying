@@ -17,7 +17,7 @@ class PngComparisonTest extends Specification {
     given:
       def png = PngComparisonTest.getResourceAsStream("hikaku-logo.png").bytes
     when:
-      def comparison = PngComparison.withMode(PngComparison.MODE.PIXEl)
+      def comparison = PngComparison.withMode(PngComparison.MODE.PIXEL)
       def beforeComapre = comparison.beforeComparison(png)
     then:
       beforeComapre.length == 2880000

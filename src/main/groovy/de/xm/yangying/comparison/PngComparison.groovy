@@ -6,15 +6,21 @@ import groovy.transform.ToString
 import javax.imageio.ImageIO
 import java.awt.image.DataBufferByte
 
-
+@ToString
 class PngComparison extends BinaryComparison {
 
   enum MODE {
-    SIZE, PIXEl
+    SIZE, PIXEL
   }
 
-  private MODE mode = MODE.SIZE
+  static final PIXEL = MODE.PIXEL
+  static final SIZE = MODE.SIZE
 
+  private MODE comparisonMode = MODE.SIZE
+
+  /**
+   * @Deprecated Use named argument construct new PngComparison(comparisonMode: MODE) instead
+   */
   static PngComparison withMode(MODE mode) {
     return new PngComparison(mode)
   }
@@ -32,7 +38,7 @@ class PngComparison extends BinaryComparison {
 
   PngComparison(MODE mode) {
     super("png")
-    this.mode = mode
+    this.comparisonMode = mode
   }
 
   @Override
@@ -40,12 +46,12 @@ class PngComparison extends BinaryComparison {
     def image = ImageIO.read(new ByteArrayInputStream(original))
     def raster = image.getRaster()
 
-    if (mode == MODE.PIXEl) {
+    if (comparisonMode == MODE.PIXEL) {
       def bufferByte = (DataBufferByte) raster.getDataBuffer()
       byte[] pixels = bufferByte.getData();
       def encoded = Base64.getEncoder().encode(pixels)
       return encoded
-    } else if (mode == MODE.SIZE) {
+    } else if (comparisonMode == MODE.SIZE) {
       def width = raster.getWidth()
       def height = raster.getHeight()
       return new Result(
@@ -53,6 +59,6 @@ class PngComparison extends BinaryComparison {
         height: height,
       )
     }
-    throw new RuntimeException("Unable to compare image in mode " + mode)
+    throw new RuntimeException("Unable to compare image in mode " + comparisonMode)
   }
 }

@@ -1,5 +1,6 @@
 package de.xm.yangying
 
+import de.xm.yangying.comparison.JsonComparison
 import de.xm.yangying.comparison.PngComparison
 import de.xm.yangying.comparison.PngComparisonTest
 import spock.lang.Specification
@@ -47,6 +48,20 @@ class FileSnapshotsIntegrationTest extends Specification {
       FileSnapshots.assertSnapshot(sample, Comparisons.jsonExcludingProperties("number"))
   }
 
+  def "Check comparison of objects with ignoring field number"() {
+    when:
+      def sample = new Sample(name: "Mickey Mouse", number: 42)
+    then:
+      FileSnapshots.assertSnapshot(sample, new JsonComparison(excludedProperties: ["number"]))
+  }
+
+  def "Check comparison of objects with ignoring type number"() {
+    when:
+      def sample = new Sample(name: "Mickey Mouse", number: 42)
+    then:
+      FileSnapshots.assertSnapshot(sample, new JsonComparison(excludedTypes: [Integer.class]))
+  }
+
   def "Check comparison of stream"() {
     when:
       def sample = new StreamSample(name: "Donald",
@@ -82,7 +97,21 @@ class FileSnapshotsIntegrationTest extends Specification {
     when:
       def png = PngComparisonTest.getResourceAsStream("hikaku-logo.png").bytes
     then:
-      FileSnapshots.snapshot(png, PngComparison.withMode(PngComparison.MODE.PIXEl)) == FileSnapshots.current(png, PngComparison.withMode(PngComparison.MODE.PIXEl))
+      FileSnapshots.snapshot(png, PngComparison.withMode(PngComparison.MODE.PIXEL)) == FileSnapshots.current(png, PngComparison.withMode(PngComparison.MODE.PIXEL))
+  }
+
+  def "Compare PNG files by raster using direct instance with comparisonMode"() {
+    when:
+      def png = PngComparisonTest.getResourceAsStream("hikaku-logo.png").bytes
+    then:
+      FileSnapshots.assertSnapshot(png, new PngComparison(comparisonMode: PngComparison.MODE.PIXEL))
+  }
+
+  def "Compare PNG files by size using direct instance"() {
+    when:
+      def png = PngComparisonTest.getResourceAsStream("hikaku-logo.png").bytes
+    then:
+      FileSnapshots.assertSnapshot(png, new PngComparison())
   }
 
   def "Compare XML files"() {
