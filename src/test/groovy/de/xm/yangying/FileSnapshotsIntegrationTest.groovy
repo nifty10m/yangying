@@ -1,6 +1,7 @@
 package de.xm.yangying
 
 import de.xm.yangying.comparison.JsonComparison
+import de.xm.yangying.comparison.ArrayComparison
 import de.xm.yangying.comparison.PngComparison
 import de.xm.yangying.comparison.PngComparisonTest
 import spock.lang.Specification
@@ -112,6 +113,32 @@ class FileSnapshotsIntegrationTest extends Specification {
       def png = PngComparisonTest.getResourceAsStream("hikaku-logo.png").bytes
     then:
       FileSnapshots.assertSnapshot(png, new PngComparison())
+  }
+
+  def "Compare String arrays"() {
+    when:
+      def data = [["Mickey", "Mouse"], ["Donald", "Duck"]]
+    then:
+      FileSnapshots.snapshot(data, new ArrayComparison()) == FileSnapshots.current(data, new ArrayComparison())
+  }
+
+  def "Compare String array"() {
+    when:
+      def data = ["Donald", "Mickey", "Goofy", "Daisy"]
+    then:
+      FileSnapshots.snapshot(data, new ArrayComparison()) == FileSnapshots.current(data, new ArrayComparison())
+  }
+
+  def "Compare large number array"() {
+    when:
+      float[][] data = new float[100][100]
+      for (i in 0..99) {
+        for (j in 0..99) {
+          data[i][j] = i + j / 100
+        }
+      }
+    then:
+      FileSnapshots.snapshot(data, new ArrayComparison()) == FileSnapshots.current(data, new ArrayComparison())
   }
 
   def "Compare XML files"() {
