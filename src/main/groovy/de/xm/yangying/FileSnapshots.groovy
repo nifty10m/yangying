@@ -57,7 +57,10 @@ class FileSnapshots {
     def resourceFile = resource.toFile()
     if (updating()) {
       "Updating ${resourceFile.getPath()}"
-      new File(resourceFile.getPath()).createNewFile()
+      File file = new File(resourceFile.getPath())
+      if (!file.exists()) {
+        file.createNewFile()
+      }
       resourceFile.bytes = comparison.beforeStore(content)
     } else if (!resourceFile.canRead() || resourceFile.bytes.length == 0) {
       if (ContinousIntegration.isCi()) {
