@@ -31,6 +31,10 @@ class FileSnapshots {
     "true".equalsIgnoreCase(System.getenv("SPOCK_UPDATE"))
   }
 
+  static void assertSnapshot(def sample) {
+    assertSnapshot(sample, new ComparisonDetector().detect(sample))
+  }
+
   static void assertSnapshot(def sample, Comparison comparison) {
     def ying = snapshot(sample, comparison)
     def yang = current(sample, comparison)
