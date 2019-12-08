@@ -12,6 +12,8 @@ The main idea of snapshot testing is to create a _snapshot_ as soon as you know 
 
 The original static method for Comparisons is no longer the default syntax. Use your own customizeable `Comparison` instances to compare current and snapshot.
 
+A new ArrayComparison for comparing arrays of primitives was added.
+
 ### 0.8 Changed behaviour in continous integration server
 
 ### 0.7 Introduced image comparison by pixel
@@ -72,10 +74,14 @@ Keep in mind the test might run a while when comparing large images.
 XML compares the object as XML files, ignoring whitespace and order of attributes.
 
 ### Text Comparison
-Thne TextComparison compares the object as plain text files, ignoring whitespace but checking all other stuff. 
+TextComparison compares the object as plain text files, ignoring whitespace but checking all other stuff. 
 ``` java
 FileSnapshots.assertSnapshot(sample, new TextComparsion())      
 ``` 
+
+### Array Comparison
+ArrayComparison compares an one or two dimension arrya of primitives as CSV file, 
+
 You can use these implementations as examples for custom comparison by implementing the Comparison interface.
 
 ## Default file storage
