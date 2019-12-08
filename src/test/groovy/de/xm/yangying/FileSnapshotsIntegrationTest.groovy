@@ -1,7 +1,7 @@
 package de.xm.yangying
 
-import de.xm.yangying.comparison.JsonComparison
 import de.xm.yangying.comparison.ArrayComparison
+import de.xm.yangying.comparison.JsonComparison
 import de.xm.yangying.comparison.PngComparison
 import de.xm.yangying.comparison.PngComparisonTest
 import spock.lang.Specification
@@ -56,6 +56,13 @@ class FileSnapshotsIntegrationTest extends Specification {
       FileSnapshots.assertSnapshot(sample, new JsonComparison(excludedProperties: ["number"]))
   }
 
+  def "Check comparison of objects with auto detection"() {
+    when:
+      def sample = new Sample(name: "Mickey Mouse", number: 42)
+    then:
+      FileSnapshots.assertSnapshot(sample)
+  }
+
   def "Check comparison of objects with ignoring type number"() {
     when:
       def sample = new Sample(name: "Mickey Mouse", number: 42)
@@ -101,6 +108,13 @@ class FileSnapshotsIntegrationTest extends Specification {
       FileSnapshots.snapshot(png, PngComparison.withMode(PngComparison.MODE.PIXEL)) == FileSnapshots.current(png, PngComparison.withMode(PngComparison.MODE.PIXEL))
   }
 
+  def "Compare PNG autodetection"() {
+    when:
+      def png = PngComparisonTest.getResourceAsStream("hikaku-logo.png").bytes
+    then:
+      FileSnapshots.assertSnapshot(png)
+  }
+
   def "Compare PNG files by raster using direct instance with comparisonMode"() {
     when:
       def png = PngComparisonTest.getResourceAsStream("hikaku-logo.png").bytes
@@ -120,6 +134,13 @@ class FileSnapshotsIntegrationTest extends Specification {
       def data = [["Mickey", "Mouse"], ["Donald", "Duck"]]
     then:
       FileSnapshots.snapshot(data, new ArrayComparison()) == FileSnapshots.current(data, new ArrayComparison())
+  }
+
+  def "Compare String arrays autodetection"() {
+    when:
+      def data = [["Mickey", "Mouse"], ["Donald", "Duck"]]
+    then:
+      FileSnapshots.assertSnapshot(data)
   }
 
   def "Compare String array"() {
