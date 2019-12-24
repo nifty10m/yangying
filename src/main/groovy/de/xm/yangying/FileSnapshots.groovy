@@ -1,6 +1,5 @@
 package de.xm.yangying
 
-
 import de.xm.yangying.environment.ContinousIntegration
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -36,12 +35,28 @@ class FileSnapshots {
   }
 
   static void assertSnapshot(def sample, Comparison comparison) {
-    def ying = snapshot(sample, comparison)
+    Path resource = detectResource(comparison)
+    def ying = readResource(resource, comparison)
     def yang = current(sample, comparison)
+    if (ying != yang && updating()) {
+      ying = upsertResource(sample, resource, true, comparison)
+    }
     assert ying == yang
   }
 
-  static def snapshot(def content, Comparison comparison) {
+  static def snapshot(Object content, Comparison comparison) {
+    Path resource = detectResource(comparison)
+    LOG.debug("No information of update of {} present, checking current ans snapshot", content)
+    def yang = current(content, comparison)
+    def ying = readResource(resource, comparison)
+    if (ying == yang) {
+      LOG.debug("No SNAPSHOT changed for {} not update required", content)
+      return ying;
+    }
+    upsertResource(content, resource, true, comparison)
+  }
+
+  private static Path detectResource(Comparison comparison) {
     Path packageDir = packageDir()
     if (!packageDir.toFile().exists()) {
       Files.createDirectories(packageDir)
@@ -57,7 +72,10 @@ class FileSnapshots {
 
     def extension = comparison.fileExtension()
     def resource = packageDir.resolve("${filename}${featuresWritten > 0 ? "-${featuresWritten}" : ""}.${extension}")
+    resource
+  }
 
+  private static def upsertResource(Object content, Path resource, boolean update, Comparison comparison) {
     def resourceFile = resource.toFile()
     if (updating()) {
       "Updating ${resourceFile.getPath()}"
@@ -74,7 +92,17 @@ class FileSnapshots {
       new File(resourceFile.getPath()).createNewFile()
       resourceFile.bytes = comparison.beforeStore(content)
     }
-    def bytes = resourceFile.getBytes()
+    return readResource(resource, comparison)
+  }
+
+  private static Object readResource(Path resource, Comparison comparison) {
+    def file = resource.toFile()
+    if (!file.canRead()) {
+      return "";
+    }
+    FeatureNameExtension.addPackageFile(file.getName())
+    LOG.debug("Restoring resources from {}", file.getPath())
+    def bytes = file.getBytes()
     def afterRestore = comparison.afterRestore(bytes)
     return comparison.beforeComparison(afterRestore)
   }
