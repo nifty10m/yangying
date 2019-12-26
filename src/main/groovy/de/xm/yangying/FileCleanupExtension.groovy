@@ -29,7 +29,7 @@ class FileCleanupExtension implements IGlobalExtension {
     spec.addCleanupSpecInterceptor(new IMethodInterceptor() {
       @Override
       void intercept(IMethodInvocation invocation) throws Throwable {
-        def specs = classSpecifications.get()
+        def specs = classSpecifications.get() ?: []
 
         def files = FileSnapshots.packageDir().toFile().listFiles()
         def obsolete = files == null ? [] : files.toList().collect { it.getName() }
