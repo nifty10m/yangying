@@ -4,6 +4,8 @@ import de.xm.yangying.comparison.ArrayComparison
 import de.xm.yangying.comparison.JsonComparison
 import de.xm.yangying.comparison.PngComparison
 import de.xm.yangying.comparison.PngComparisonTest
+import org.spockframework.runtime.SpockAssertionError
+import spock.lang.FailsWith
 import spock.lang.Specification
 
 class FileSnapshotsIntegrationTest extends Specification {
@@ -56,6 +58,7 @@ class FileSnapshotsIntegrationTest extends Specification {
       FileSnapshots.assertSnapshot(sample, new JsonComparison(excludedProperties: ["number"]))
   }
 
+  @FailsWith(SpockAssertionError.class)
   def "Check comparison of objects with auto detection"() {
     when:
       def sample = new Sample(name: "Mickey Mouse", number: 42)

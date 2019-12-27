@@ -11,7 +11,7 @@ import groovy.json.JsonSlurper
 
 import java.nio.charset.StandardCharsets
 
-public class ComparisonDetector {
+class ComparisonDetector {
 
   Comparison detect(def input) {
     if (input instanceof byte[]) {

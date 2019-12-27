@@ -9,7 +9,7 @@ import org.spockframework.runtime.model.SpecInfo
 
 class FeatureNameExtension implements IGlobalExtension {
 
-  private static final Logger LOG = LoggerFactory.getLogger(FileSnapshots.class)
+  private static final Logger LOG = LoggerFactory.getLogger(FeatureNameExtension.class)
 
   static ThreadLocal<String> featureNameContext = new ThreadLocal<>()
   static ThreadLocal<String> packageNameContext = new ThreadLocal<>()
@@ -40,12 +40,6 @@ class FeatureNameExtension implements IGlobalExtension {
         LOG.debug "Interception ${invocation.instance.getClass().getSimpleName()}"
         packageNameContext.set(invocation.getSpec().getPackage())
         classNameContext.set(invocation.getInstance().getClass().getSimpleName())
-        if (FileSnapshots.updating()) {
-          FileSnapshots.packageDir().toFile().listFiles().each {
-            LOG.debug("Updating {}", it.getName())
-            it.delete()
-          }
-        }
       }
     })
   }

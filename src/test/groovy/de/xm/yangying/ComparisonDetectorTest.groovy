@@ -8,7 +8,7 @@ import spock.lang.Unroll
 class ComparisonDetectorTest extends Specification {
 
   @Unroll
-  def "test isJson"() {
+  def "test '#text' isJson == #expected"() {
     expect:
       def cut = new ComparisonDetector()
       cut.isJson(text) == expected
@@ -20,7 +20,7 @@ class ComparisonDetectorTest extends Specification {
   }
 
   @Unroll
-  def "test is text"() {
+  def "test '#text' is text == #expected"() {
     expect:
       def cut = new ComparisonDetector()
       cut.isText(text) == expected
@@ -32,7 +32,7 @@ class ComparisonDetectorTest extends Specification {
   }
 
   @Unroll
-  def "test is array"() {
+  def "test '#text' is array == #expected "() {
     expect:
       def cut = new ComparisonDetector()
       cut.isArrayOrCollection(text) == expected
