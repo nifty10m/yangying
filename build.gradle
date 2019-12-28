@@ -31,7 +31,7 @@ dependencies {
     }
     // Use the awesome Spock testing and specification framework
     testImplementation 'org.spockframework:spock-core:1.3-groovy-2.5'
-    testImplementation 'org.slf4j:slf4j-simple:1.7.25'
+    testImplementation 'org.slf4j:slf4j-simple:1.7.30'
 }
 
 task javadocJar(type: Jar) {
