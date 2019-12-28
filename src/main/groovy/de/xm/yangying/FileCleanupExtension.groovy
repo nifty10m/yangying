@@ -37,6 +37,8 @@ class FileCleanupExtension implements IGlobalExtension {
         if (FileSnapshots.updating()) {
           obsolete.each { Files.delete(Paths.get("${FileSnapshots.packageDir().toFile()}/${it}")) }
           LOG.warn("Deleted {}", obsolete)
+        } else {
+          LOG.debug("No in UPDATE mode, no files are deleted")
         }
       }
     })

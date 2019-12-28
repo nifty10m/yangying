@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets
  */
 class TextComparison extends BinaryComparison {
 
+  boolean ignoreWhitespace = true
   boolean ignoreCase
 
   TextComparison() {
@@ -15,7 +16,8 @@ class TextComparison extends BinaryComparison {
 
   @Override
   def beforeComparison(Object original) {
-    def withoutWhitespace = original.toString().replaceAll("\\s+", "")
+    def input = original.toString()
+    def withoutWhitespace = ignoreWhitespace ? input.replaceAll("\\s+", "") : input
     def compare = ignoreCase ? withoutWhitespace.toLowerCase(Locale.ENGLISH) : withoutWhitespace
     return compare
   }

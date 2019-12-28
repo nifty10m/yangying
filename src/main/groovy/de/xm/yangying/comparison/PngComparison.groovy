@@ -1,13 +1,18 @@
 package de.xm.yangying.comparison
 
+
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 import javax.imageio.ImageIO
 import java.awt.image.DataBufferByte
 
 @ToString
 class PngComparison extends BinaryComparison {
+
+  private static final Logger LOG = LoggerFactory.getLogger(PngComparison.class)
 
   enum MODE {
     SIZE, PIXEL
@@ -54,10 +59,13 @@ class PngComparison extends BinaryComparison {
     } else if (comparisonMode == MODE.SIZE) {
       def width = raster.getWidth()
       def height = raster.getHeight()
-      return new Result(
+
+      def result = new Result(
         with: width,
         height: height,
       )
+      LOG.debug("Extracted result {}", result)
+      return result
     }
     throw new RuntimeException("Unable to compare image in mode " + comparisonMode)
   }

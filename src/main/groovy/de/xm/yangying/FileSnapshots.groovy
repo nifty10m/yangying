@@ -28,18 +28,22 @@ class FileSnapshots {
   }
   static updating = { "true".equalsIgnoreCase(System.getenv("SPOCK_UPDATE")) }
 
+  /**
+   * Check if current version is equals with SNAPSHOT version using detected resource from sample
+   * @param sample
+   */
   static void assertSnapshot(def sample) {
     assertSnapshot(sample, new ComparisonDetector().detect(sample))
   }
 
   static void assertSnapshot(def content, Comparison comparison) {
     Path resource = detectResource(comparison)
-    def ying = readResource(resource, comparison)
+    def yin = readResource(resource, comparison)
     def yang = current(content, comparison)
-    if (ying != yang && updating()) {
-      ying = upsertResource(content, resource, comparison)
+    if (yin != yang && updating()) {
+      yin = upsertResource(content, resource, comparison)
     }
-    assert ying == yang
+    assert yin == yang
   }
 
   static def snapshot(Object content, Comparison comparison) {
@@ -49,31 +53,24 @@ class FileSnapshots {
       LOG.debug("No information of update of {} present, checking current as snapshot", debugString.substring(0, Math.min(20, debugString.size())))
     }
     def yang = current(content, comparison)
-    def ying = readResource(resource, comparison)
-    if (ying == yang) {
+    def yin = readResource(resource, comparison)
+    if (yin == yang) {
       LOG.debug("No SNAPSHOT changed for {} not update required", content)
-      return ying;
+      return yin;
     }
     upsertResource(content, resource, comparison)
   }
 
-  private static Path detectResource(Comparison comparison) {
-    Path packageDir = packageDir()
-    if (!Files.exists(packageDir)) {
-      LOG.debug("Creating package dir {}", packageDir)
-      Files.createDirectories(packageDir)
-    }
+  static Path packageDir() {
+    def packagePath = packageNameProvider().replaceAll("\\.", File.separator)
+    def className = classNameProvider().replaceAll("(?<upper>[A-Z])", '-${upper}').toLowerCase().substring(1)
 
-    def filename = featureName().toLowerCase(ENGLISH).replaceAll("[^a-z0-9]+", "-")
-    if (lastWrittenFeatureName && lastWrittenFeatureName.startsWith(featureName())) {
-      featuresWritten++
-    } else {
-      lastWrittenFeatureName = featureName()
-      featuresWritten = 0
-    }
+    def testDir = Paths.get("src").resolve("test").resolve("resources")
+    return testDir.resolve(packagePath).resolve(className).resolve("snapshots")
+  }
 
-    def extension = comparison.fileExtension()
-    return packageDir.resolve("${filename}${featuresWritten > 0 ? "-${featuresWritten}" : ""}.${extension}")
+  static def current(def content, Comparison comparison) {
+    return comparison.beforeComparison(content)
   }
 
   private static def upsertResource(Object content, Path resource, Comparison comparison) {
@@ -95,6 +92,27 @@ class FileSnapshots {
     return readResource(resource, comparison)
   }
 
+  private static Path detectResource(Comparison comparison) {
+    Path packageDir = packageDir()
+    if (!Files.exists(packageDir)) {
+      LOG.debug("Creating package dir {}", packageDir)
+      Files.createDirectories(packageDir)
+    }
+
+    def filename = featureName()
+      .toLowerCase(ENGLISH)
+      .replaceAll("[^a-z0-9]+", "-")
+    if (lastWrittenFeatureName && lastWrittenFeatureName.startsWith(featureName())) {
+      featuresWritten++
+    } else {
+      lastWrittenFeatureName = featureName()
+      featuresWritten = 0
+    }
+
+    def extension = comparison.fileExtension()
+    return packageDir.resolve("${filename}${featuresWritten > 0 ? "-${featuresWritten}" : ""}.${extension}")
+  }
+
   private static Object readResource(Path resource, Comparison comparison) {
     def file = resource.toFile()
     if (!file.canRead()) {
@@ -105,17 +123,6 @@ class FileSnapshots {
     def bytes = file.getBytes()
     def afterRestore = comparison.afterRestore(bytes)
     return comparison.beforeComparison(afterRestore)
-  }
-
-  static Path packageDir() {
-    def packagePath = packageNameProvider().replaceAll("\\.", File.separator)
-    def className = classNameProvider().replaceAll("(?<upper>[A-Z])", '-${upper}').toLowerCase().substring(1)
-
-    return Paths.get("src/test/resources/${packagePath}/${className}/snapshots")
-  }
-
-  static def current(def content, Comparison comparison) {
-    return comparison.beforeComparison(content)
   }
 
 }

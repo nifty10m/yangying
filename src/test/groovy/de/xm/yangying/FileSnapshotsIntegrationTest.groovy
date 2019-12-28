@@ -99,35 +99,35 @@ class FileSnapshotsIntegrationTest extends Specification {
 
   def "Compare PNG files"() {
     when:
-      def png = PngComparisonTest.getResourceAsStream("hikaku-logo.png").bytes
+      def png = PngComparisonTest.getResourceAsStream("yin-yang.png").bytes
     then:
       FileSnapshots.snapshot(png, Comparisons.PNG) == FileSnapshots.current(png, Comparisons.PNG)
   }
 
   def "Compare PNG files by raster"() {
     when:
-      def png = PngComparisonTest.getResourceAsStream("hikaku-logo.png").bytes
+      def png = PngComparisonTest.getResourceAsStream("yin-yang.png").bytes
     then:
       FileSnapshots.snapshot(png, PngComparison.withMode(PngComparison.MODE.PIXEL)) == FileSnapshots.current(png, PngComparison.withMode(PngComparison.MODE.PIXEL))
   }
 
   def "Compare PNG autodetection"() {
     when:
-      def png = PngComparisonTest.getResourceAsStream("hikaku-logo.png").bytes
+      def png = PngComparisonTest.getResourceAsStream("yin-yang.png").bytes
     then:
       FileSnapshots.assertSnapshot(png)
   }
 
   def "Compare PNG files by raster using direct instance with comparisonMode"() {
     when:
-      def png = PngComparisonTest.getResourceAsStream("hikaku-logo.png").bytes
+      def png = PngComparisonTest.getResourceAsStream("yin-yang.png").bytes
     then:
       FileSnapshots.assertSnapshot(png, new PngComparison(comparisonMode: PngComparison.MODE.PIXEL))
   }
 
   def "Compare PNG files by size using direct instance"() {
     when:
-      def png = PngComparisonTest.getResourceAsStream("hikaku-logo.png").bytes
+      def png = PngComparisonTest.getResourceAsStream("yin-yang.png").bytes
     then:
       FileSnapshots.assertSnapshot(png, new PngComparison())
   }
