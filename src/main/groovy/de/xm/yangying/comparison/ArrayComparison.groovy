@@ -12,6 +12,7 @@ class ArrayComparison implements Comparison {
   BigDecimal maxValue = BigDecimal.valueOf(Integer.MAX_VALUE)
   List ignoreValues = []
   String columnSeparator = ","
+  int rounding = 4
 
   @Override
   String fileExtension() {
@@ -25,7 +26,7 @@ class ArrayComparison implements Comparison {
         createStream(row)
           .map({ column -> column instanceof Float ? new BigDecimal(column) : column })
           .map({ column -> column instanceof Double ? new BigDecimal(column) : column })
-          .map({ column -> column instanceof BigDecimal ? column.round(4) : column })
+          .map({ column -> column instanceof BigDecimal ? column.round(rounding) : column })
           .collect(Collectors.toList())
       })
       .collect(Collectors.toList())
@@ -47,7 +48,7 @@ class ArrayComparison implements Comparison {
         lines << line.trim().split(columnSeparator)
           .collect { column ->
             if (column.isBigDecimal()) {
-              def value = new BigDecimal(column.trim()).round(4)
+              def value = new BigDecimal(column.trim()).round(rounding)
               return value >= minValue && value <= maxValue ? value : ""
             }
             return column
