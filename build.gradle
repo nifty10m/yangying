@@ -1,6 +1,7 @@
 plugins {
     // Apply the groovy plugin to add support for Groovy
     id 'groovy'
+    id 'jacoco'
     id 'java-library'
     id 'maven-publish'
     id 'signing'
@@ -32,6 +33,15 @@ dependencies {
     // Use the awesome Spock testing and specification framework
     testImplementation 'org.spockframework:spock-core:1.3-groovy-2.5'
     testImplementation 'org.slf4j:slf4j-simple:1.7.30'
+}
+
+tasks.withType(JacocoReport) {
+    reports {
+        xml.enabled true // XML output is needed for the coverage task
+    }
+}
+jacocoTestReport.dependsOn {
+    test
 }
 
 task javadocJar(type: Jar) {
