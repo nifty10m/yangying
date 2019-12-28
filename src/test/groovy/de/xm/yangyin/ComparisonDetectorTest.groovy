@@ -1,9 +1,9 @@
-package de.xm.yangying
+package de.xm.yangyin
 
-import de.xm.yangying.comparison.ArrayComparison
-import de.xm.yangying.comparison.JsonComparison
-import de.xm.yangying.comparison.TextComparison
-import de.xm.yangying.comparison.XmlComparison
+import de.xm.yangyin.comparison.ArrayComparison
+import de.xm.yangyin.comparison.JsonComparison
+import de.xm.yangyin.comparison.TextComparison
+import de.xm.yangyin.comparison.XmlComparison
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -13,7 +13,7 @@ class ComparisonDetectorTest extends Specification {
   @Unroll
   def "test '#text' isJson == #expected"() {
     expect:
-      def cut = new ComparisonDetector.CanCompareJson()
+      def cut = new CanCompareJson()
       expected == cut.detect(text) instanceof JsonComparison
     where:
       text                                               || expected
@@ -25,7 +25,7 @@ class ComparisonDetectorTest extends Specification {
   @Unroll
   def "test '#text' is text == #expected"() {
     expect:
-      def cut = new ComparisonDetector.CanCompareText()
+      def cut = new CanCompareText()
       cut.detect(text) instanceof TextComparison == expected
     where:
       text         || expected
@@ -49,7 +49,7 @@ class ComparisonDetectorTest extends Specification {
   @Unroll
   def "test '#text' is array == #expected "() {
     expect:
-      def cut = new ComparisonDetector.CanCompareArray()
+      def cut = new CanCompareArray()
       cut.detect(text) instanceof ArrayComparison == expected
     where:
       text                     || expected

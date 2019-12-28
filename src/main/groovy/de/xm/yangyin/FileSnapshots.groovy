@@ -1,6 +1,6 @@
-package de.xm.yangying
+package de.xm.yangyin
 
-import de.xm.yangying.environment.ContinousIntegration
+import de.xm.yangyin.environment.ContinousIntegration
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 

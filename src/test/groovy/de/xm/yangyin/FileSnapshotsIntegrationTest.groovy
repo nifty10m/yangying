@@ -1,9 +1,9 @@
-package de.xm.yangying
+package de.xm.yangyin
 
-import de.xm.yangying.comparison.ArrayComparison
-import de.xm.yangying.comparison.JsonComparison
-import de.xm.yangying.comparison.PngComparison
-import de.xm.yangying.comparison.PngComparisonTest
+import de.xm.yangyin.comparison.ArrayComparison
+import de.xm.yangyin.comparison.JsonComparison
+import de.xm.yangyin.comparison.PngComparison
+import de.xm.yangyin.comparison.PngComparisonTest
 import org.spockframework.runtime.SpockAssertionError
 import spock.lang.FailsWith
 import spock.lang.Specification

@@ -1,4 +1,4 @@
-package de.xm.yangying.comparison
+package de.xm.yangyin.comparison
 
 import java.nio.charset.StandardCharsets
 

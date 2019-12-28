@@ -14,7 +14,7 @@ repositories {
     mavenCentral()
 }
 
-group = 'io.github.nifty10m.yangying'
+group = 'io.github.nifty10m.yangyin'
 version = gitVersion()
 
 dependencies {
@@ -57,7 +57,7 @@ task sourcesJar(type: Jar) {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            artifactId = 'yangying'
+            artifactId = 'yangyin'
             groupId = 'io.github.nifty10m'
             artifact sourcesJar
             artifact javadocJar
@@ -70,9 +70,9 @@ publishing {
                 }
             }
             pom {
-                name = 'yangying'
+                name = 'yangyin'
                 description = 'A snapshot comparison library for spock'
-                url = "https://www.github.com/nifty10m/yangying"
+                url = "https://www.github.com/nifty10m/yangyin"
                 licenses {
                     license {
                         name = "MIT License"
@@ -87,9 +87,9 @@ publishing {
                     }
                 }
                 scm {
-                    connection = "scm:git:git://github.com/nifty10m/yangying.git"
-                    developerConnection = "scm:git:ssh://git@github.com:nifty10m/yangying.git"
-                    url = "https://www.github.com/nifty10m/yangying"
+                    connection = "scm:git:git://github.com/nifty10m/yangyin.git"
+                    developerConnection = "scm:git:ssh://git@github.com:nifty10m/yangyin.git"
+                    url = "https://www.github.com/nifty10m/yangyin"
                 }
             }
             from components.java

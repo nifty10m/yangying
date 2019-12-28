@@ -1,4 +1,4 @@
-package de.xm.yangying.environment
+package de.xm.yangyin.environment
 
 import groovy.json.JsonSlurper
 import groovy.transform.ToString

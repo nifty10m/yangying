@@ -1,12 +1,12 @@
-package de.xm.yangying
+package de.xm.yangyin
 
 
-import de.xm.yangying.comparison.BinaryComparison
-import de.xm.yangying.comparison.JsonComparison
-import de.xm.yangying.comparison.PngComparison
-import de.xm.yangying.comparison.TextComparison
-import de.xm.yangying.comparison.TiffComparison
-import de.xm.yangying.comparison.XmlComparison
+import de.xm.yangyin.comparison.BinaryComparison
+import de.xm.yangyin.comparison.JsonComparison
+import de.xm.yangyin.comparison.PngComparison
+import de.xm.yangyin.comparison.TextComparison
+import de.xm.yangyin.comparison.TiffComparison
+import de.xm.yangyin.comparison.XmlComparison
 /**
  * Helper class with preconfigured comparison storages
  *

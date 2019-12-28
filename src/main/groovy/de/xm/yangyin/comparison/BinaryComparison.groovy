@@ -1,6 +1,6 @@
-package de.xm.yangying.comparison
+package de.xm.yangyin.comparison
 
-import de.xm.yangying.Comparison
+import de.xm.yangyin.Comparison
 
 
 class BinaryComparison implements Comparison {

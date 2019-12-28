@@ -1,11 +1,11 @@
-package de.xm.yangying
+package de.xm.yangyin
 
-import de.xm.yangying.comparison.ArrayComparison
-import de.xm.yangying.comparison.BinaryComparison
-import de.xm.yangying.comparison.JsonComparison
-import de.xm.yangying.comparison.PngComparison
-import de.xm.yangying.comparison.TextComparison
-import de.xm.yangying.comparison.XmlComparison
+import de.xm.yangyin.comparison.ArrayComparison
+import de.xm.yangyin.comparison.BinaryComparison
+import de.xm.yangyin.comparison.JsonComparison
+import de.xm.yangyin.comparison.PngComparison
+import de.xm.yangyin.comparison.TextComparison
+import de.xm.yangyin.comparison.XmlComparison
 import groovy.json.JsonException
 import groovy.json.JsonSlurper
 import org.xml.sax.SAXException
