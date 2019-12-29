@@ -67,6 +67,6 @@ class PngComparison extends BinaryComparison {
       LOG.debug("Extracted result {}", result)
       return result
     }
-    throw new RuntimeException("Unable to compare image in mode " + comparisonMode)
+    throw new RuntimeException("Unable to compare image in mode ${comparisonMode}")
   }
 }

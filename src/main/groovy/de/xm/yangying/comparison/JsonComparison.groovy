@@ -28,12 +28,6 @@ class JsonComparison implements Comparison {
   /**
    * Class should not be instanced directly use JsonComparison subclass
    */
-  protected JsonComparison() {
-  }
-
-  /**
-   * Class should not be instanced directly use JsonComparison subclass
-   */
   @Deprecated
   protected ConfigureableResponseComparison(String... excludedProperties) {
     this.excludedProperties = excludedProperties
