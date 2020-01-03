@@ -11,22 +11,34 @@ class JsonComparisonTest extends Specification {
   }
   def cut = new JsonComparison()
 
-  def "Data should be be compared as map object"() {
+  def "Data should be compared as map object"() {
     given:
-      def data = new Sample(name: "Joe", number: 42)
+        def data = new Sample(name: "Joe", number: 42)
     when:
-      def json = cut.beforeComparison(data)
+        def json = cut.beforeComparison(data)
     then:
-      json == [name: "Joe", number: 42]
+        json == [name: "Joe", number: 42]
   }
 
-  def "Data should be be stored as json object"() {
+  def "Data should be stored as json object"() {
     given:
-      def data = new Sample(name: "Joe", number: 42)
+        def data = new Sample(name: "Joe", number: 42)
     when:
-      def json = cut.beforeStore(data)
+        def json = cut.beforeStore(data)
     then:
-      new String(json, "utf-8") == """{
+        new String(json, "utf-8") == """{
+    "name": "Joe",
+    "number": 42
+}"""
+  }
+
+  def "Json string should be formated and stored as json object"() {
+    given:
+        def data = /{"name":"Joe","number":42}/
+    when:
+        def json = cut.beforeStore(data)
+    then:
+        new String(json, "utf-8") == """{
     "name": "Joe",
     "number": 42
 }"""

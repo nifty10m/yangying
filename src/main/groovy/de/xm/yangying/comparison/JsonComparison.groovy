@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter
 
 class JsonComparison implements Comparison {
 
-  private JsonGenerator JSON_GENERATOR;
+  private JsonGenerator JSON_GENERATOR
 
   String[] excludedProperties = []
   String[] excludedTypes = []
