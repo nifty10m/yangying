@@ -1,6 +1,6 @@
-# YangYing
+# YangYin
 
-YangYing is an extension for [Spock](https://www.spockframework.org) to support snapshot testing. Snapshot testing means comparing current result of a test with a previously store result.
+YangYin is an extension for [Spock](https://www.spockframework.org) to support snapshot testing. Snapshot testing means comparing current result of a test with a previously store result.
 
 ## The idea of snapshot testing
 
@@ -8,7 +8,9 @@ The main idea of snapshot testing is to create a _snapshot_ as soon as you know 
 
 ## Release Notes
 
-All releases before version 1.x should not be considred stable there might be breaking changes during minor releases.
+### 1.0 Renamed to yangyin
+
+Cause the usual transcription is yin and yang the project is now named yanyin.
 
 ### 0.92 Changed behaviour for SPOCK_UPDATE
 
@@ -31,7 +33,7 @@ A new ArrayComparison for comparing arrays of primitives was added.
 
 Basic usage is done using the static `FileSnapshots` methods to create a snapshot from the latest api call and compare it with the the result stored in the file systems.
 
-Each method requires a `Comparison` to indicate if objects are equals. There are several Comparison implementations inside yangying but you can easily use your own implementation.
+Each method requires a `Comparison` to indicate if objects are equals. There are several Comparison implementations inside yangyin but you can easily use your own implementation.
 
 ``` java
 def result = classUnderTest.call(...)
@@ -48,11 +50,11 @@ FileSnapshots.assertSnapshot(sample, new JsonComparison())
 
 ## Design Goals
 
-YangYing was developed having the following goals in mind:
+YangYin was developed having the following goals in mind:
 
 * Even for a testing library the code should be lightweighted without large dependencies. For basic usage the presence of spock, groovy and an up to date JDK should be enough.
 * Readable code is prefered over performance optimization. Even if execution time might be optimized or snapshot storage could be more effizient readable code and readable error messages are prefered.
-* Snapshot should be human readable. YangYing is designed to store snapshots using common file formats (i.e. .json or .png) so you can use your default system editor to inspect the snapshots. 
+* Snapshot should be human readable. YangYin is designed to store snapshots using common file formats (i.e. .json or .png) so you can use your default system editor to inspect the snapshots. 
 
 ## Behaviour and updating
 
@@ -63,11 +65,11 @@ The default behaviour of the library is:
 
 The behaviour in continous integration environment is a little bit different. If running in such an environment (most are detected by default) the test will fail if there is no snapshot in the file system. If your system is not recognized you can add an environment variable _CI_ to express you are running in an continous integration mode.
 
-If you have changed the logic and want to **update** the persistent representation you can provide an environment variable `SPOCK_UPDATE="true"` to force yangying to update all existing snapshot files.
+If you have changed the logic and want to **update** the persistent representation you can provide an environment variable `SPOCK_UPDATE="true"` to force yangyin  to update all existing snapshot files.
 
 ## Build in comparisons
 
-YingYang contains some build in comparisons:
+YangYin contains some build in comparisons:
 
 ### Binary Comparison
 Object may be compared using BINARY comparison, in this comparison current and snapshot should be the same, meaning the `byte[]` implementation of snapshot und current must be equals.
