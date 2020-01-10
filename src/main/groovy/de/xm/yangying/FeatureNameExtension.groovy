@@ -28,7 +28,8 @@ class FeatureNameExtension implements IGlobalExtension {
   }
 
   void start() {
-
+    LOG.info("This is an outdate release of yangying and is discontinued. Please use yangyin which is the latest version of the lib")
+    LOG.info("Just replace the package yangying with the package yangyin in your project")
   }
 
   @Override
