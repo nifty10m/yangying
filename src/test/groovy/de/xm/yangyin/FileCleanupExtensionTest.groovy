@@ -1,4 +1,4 @@
-package de.xm.yangying
+package de.xm.yangyin
 
 
 import spock.lang.Specification

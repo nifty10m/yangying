@@ -13,7 +13,7 @@ class ComparisonDetectorTest extends Specification {
   @Unroll
   def "test '#text' isJson == #expected"() {
     expect:
-      def cut = new CanCompareJson()
+      def cut = new ComparisonDetector.CanCompareJson()
       expected == cut.detect(text) instanceof JsonComparison
     where:
       text                                               || expected
@@ -25,7 +25,7 @@ class ComparisonDetectorTest extends Specification {
   @Unroll
   def "test '#text' is text == #expected"() {
     expect:
-      def cut = new CanCompareText()
+        def cut = new ComparisonDetector.CanCompareText()
       cut.detect(text) instanceof TextComparison == expected
     where:
       text         || expected
@@ -49,7 +49,7 @@ class ComparisonDetectorTest extends Specification {
   @Unroll
   def "test '#text' is array == #expected "() {
     expect:
-      def cut = new CanCompareArray()
+        def cut = new ComparisonDetector.CanCompareArray()
       cut.detect(text) instanceof ArrayComparison == expected
     where:
       text                     || expected

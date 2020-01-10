@@ -8,7 +8,9 @@ The main idea of snapshot testing is to create a _snapshot_ as soon as you know 
 
 ## Release Notes
 
-All releases before version 1.x should not be considred stable there might be breaking changes during minor releases.
+### 1.0 Renamed to yangyin
+
+Cause the usual transcription is yin and yang the project is now named yanyin.
 
 ### 0.92 Changed behaviour for SPOCK_UPDATE
 
