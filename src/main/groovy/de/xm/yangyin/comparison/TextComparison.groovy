@@ -1,17 +1,20 @@
 package de.xm.yangyin.comparison
 
+import de.xm.yangyin.Comparison
+
 import java.nio.charset.StandardCharsets
 
 /**
  * Comparison to compare text content as plain text
  */
-class TextComparison extends BinaryComparison {
+class TextComparison implements Comparison {
 
   boolean ignoreWhitespace = true
   boolean ignoreCase
 
-  TextComparison() {
-    super("txt")
+  @Override
+  String fileExtension() {
+    return "txt"
   }
 
   @Override
