@@ -1,11 +1,9 @@
 package de.xm.yangyin
 
-
 import de.xm.yangyin.comparison.BinaryComparison
 import de.xm.yangyin.comparison.JsonComparison
 import de.xm.yangyin.comparison.PngComparison
 import de.xm.yangyin.comparison.TextComparison
-import de.xm.yangyin.comparison.TiffComparison
 import de.xm.yangyin.comparison.XmlComparison
 /**
  * Helper class with preconfigured comparison storages
@@ -28,13 +26,6 @@ class Comparisons {
   public static Comparison png(PngComparison.MODE comparisonMode) {
     return new PngComparison(comparisonMode)
   }
-
-  /**
-   * Compare data base on TiffComparison checking bytes as an TIFF image
-   * @Deprecated Use BINARY instead
-   */
-  @Deprecated
-  public static Comparison TIFF = new TiffComparison()
 
   /**
    * A preconfigured Json response excluding no attributes
