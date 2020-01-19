@@ -8,6 +8,14 @@ The main idea of snapshot testing is to create a _snapshot_ as soon as you know 
 
 ## Release Notes
 
+### 1.1 Removed all deprecated comparison
+
+Dropped all deprecated Comparison implementations which are no longer maintained.
+
+### 1.0.2 Added HtmlComparison
+
+Introduced the first version of HtmlComparison to compare HTML code as text
+
 ### 1.0 Renamed to yangyin
 
 Cause the usual transcription is yin and yang the project is now named yanyin.
@@ -107,6 +115,11 @@ FileSnapshots.assertSnapshot(sample, new TextComparison())
 
 The `TextComparison` has the following options:
 * `boolean ignoreCase` Treat results as equals even if they have different upper/lowercase spelling.
+* `boolean ignoreWhitespace` Remove all white space when comparing text.
+
+### HTML Comparison
+HtmlComparison compares the object using a HTML file. This is a simple text comparison using a filesuffix of html to represent the text as html in file system.
+So no parsing is done and no checking of valid syntax
 
 ### Array Comparison
 ArrayComparison compares an one or two dimension arrya of primitives as CSV file, 
