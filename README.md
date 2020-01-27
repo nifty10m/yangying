@@ -8,6 +8,10 @@ The main idea of snapshot testing is to create a _snapshot_ as soon as you know 
 
 ## Release Notes
 
+### 1.11 Fix a problem when generating SNAPSHOTS
+
+Fixes a bug when generating SNAPSHOT files with power assertion.
+
 ### 1.1 Removed all deprecated comparison
 
 Dropped all deprecated Comparison implementations which are no longer maintained.
