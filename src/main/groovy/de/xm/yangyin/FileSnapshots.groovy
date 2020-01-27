@@ -40,7 +40,7 @@ class FileSnapshots {
     Path resource = detectResource(comparison)
     def yin = readResource(resource, comparison)
     def yang = current(content, comparison)
-    if (yin != yang && updating()) {
+    if ("" == yin || (yin != yang && updating())) {
       yin = upsertResource(content, resource, comparison)
     }
     assert yin == yang
