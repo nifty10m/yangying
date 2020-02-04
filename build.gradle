@@ -71,7 +71,7 @@ publishing {
             }
             pom {
                 name = 'yangyin'
-                description = 'A snapshot comparison library for spock'
+                description = 'A snapshot comparison library for the spock framework'
                 url = "https://www.github.com/nifty10m/yangyin"
                 licenses {
                     license {
@@ -82,7 +82,7 @@ publishing {
                 developers {
                     developer {
                         id = "terrible_herbst"
-                        name = "Joerg Herbst"
+                        name = "Jörg Herbst"
                         email = "joerg.herbst@10m.de"
                     }
                 }

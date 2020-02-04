@@ -17,7 +17,7 @@ class JsonComparison implements Comparison {
   private JsonGenerator JSON_GENERATOR
 
   String[] excludedProperties = []
-  String[] excludedTypes = []
+  Class[] excludedTypes = []
   Map<Class, Closure> converter = [
     (Instant.class)      : { it -> it.toEpochMilli() },
     (Year.class)         : { it.getValue() },
@@ -64,8 +64,9 @@ class JsonComparison implements Comparison {
   private String toJson(original) {
     if (JSON_GENERATOR == null) {
       def options = new JsonGenerator.Options()
-        .excludeFieldsByName(excludedProperties)
-        .excludeFieldsByName(excludedTypes)
+          .excludeFieldsByName(excludedProperties)
+          .excludeFieldsByType(excludedTypes)
+
       converter.each({ options.addConverter(it.key, it.value) })
       JSON_GENERATOR = options.build()
     }
