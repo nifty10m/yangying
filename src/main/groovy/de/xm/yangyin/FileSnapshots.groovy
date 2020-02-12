@@ -3,6 +3,9 @@ package de.xm.yangyin
 import de.xm.yangyin.environment.ContinousIntegration
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.spockframework.runtime.Condition
+import org.spockframework.runtime.ConditionNotSatisfiedError
+import org.spockframework.util.CollectionUtil
 
 import java.nio.file.Files
 import java.nio.file.Path
@@ -43,7 +46,11 @@ class FileSnapshots {
     if ("" == yin || (yin != yang && updating())) {
       yin = upsertResource(content, resource, comparison)
     }
-    assert yin == yang
+    if (yin != yang) {
+      throw new ConditionNotSatisfiedError(
+          new Condition(CollectionUtil.listOf(yin, yang, false),
+              "argument == ${resource}", null, null, null, null))
+    }
   }
 
   static def snapshot(Object content, Comparison comparison) {
