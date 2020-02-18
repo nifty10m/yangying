@@ -8,6 +8,11 @@ The main idea of snapshot testing is to create a _snapshot_ as soon as you know 
 
 ## Release Notes
 
+### 1.20 Update spock and change comparison
+
+Failed comparisons are now handled as exceptions to get a better log message
+Spock prefered version is now 1.3 to support JDK 11
+
 ### 1.13 Fix a problem when excluding types in Json
 
 Fixes a bug where types where not excluded although this feature was documented
