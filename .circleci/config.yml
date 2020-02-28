@@ -52,7 +52,7 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
       - run: echo $SIGNING_SECRET_KEY_RING_FILE | base64 --decode > /home/circleci/project/secring.gpg
-      - run: ./gradlew -Psigning.keyId=$SIGNING_KEYID -Psigning.password=$SIGNING_PASSWORD -Psigning.secretKeyRingFile=/home/circleci/project/secring.gpg publish
+      - run: ./gradlew -Psigning.keyId=$SIGNING_KEYID -Psigning.password=$SIGNING_PASSWORD -Psigning.secretKeyRingFile=/home/circleci/project/secring.gpg publish closeAndReleaseRepository
 
 workflows:
   version: 2
